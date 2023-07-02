@@ -1,6 +1,6 @@
-/* div {
-    border: orange solid 1px;
-} */
+div {
+    /* border: orange solid 1px; */
+}
 
 #form-container {
     width: 22rem;
@@ -44,4 +44,30 @@ span {
 
 input:focus {
     outline: 0;
+}
+
+/* #form-container .pass-div {
+    display: grid;
+    margin-top: 1rem;
+    text-align: center;
+    justify-content: center;
+
+} */
+
+p {
+    font-size: .8rem;
+    margin: 0;
+}
+
+/* #fpass {
+    margin-top: 1rem;
+} */
+.instructions {
+    margin: 0;
+    padding: 0;
+}
+.instructions div:last-child {
+    width: 11rem;
+    margin: 0;
+    padding: 0;
 }

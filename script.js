@@ -1,39 +1,67 @@
-const emailRegEx = /^[a-z0-9][a-z0-9_.-]+@[a-z0-9]+\.(com|net|org|biz|uk|ca|gov|us)/i;
+
+
+function checkValidity(anInput, str, regexVal) {
+    if (regexVal.test(str)) {
+        anInput.className = 'valid';
+    } else {
+        anInput.className = 'invalid';
+    };
+    submitAble();
+};
+
+function submitAble() {
+    if (passwordInput.value.length > 7) {
+        passwordInput.className = 'valid';
+        if (emailInput.className === 'valid') {
+            if (emailInput.className === countryInput.className && countryInput.className === zipcodeInput.className) {
+                submitBtn.disabled = false;
+            }
+        }
+    }
+}
+
+const emailRegEx = /^[a-z0-9][a-z0-9_.-]+@[a-z0-9]+\.(com|net|org|biz|uk|ca|gov|us|eu|edu)$/i;
+const countryRegEx = /(?=.*[a-z])(?!.*\d)[a-z ]+/i;
+const zipcodeRegEx = /^\d{4,5}$/;
 const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 
-
-
-function dontRefresh(e) {
-    e.preventDefault();
-    
-    
-    checkEmail(emailInput.value);
-}
-
-function checkEmail() {
-    const str = emailInput.value;
-    const emailRegEx = /^[a-z0-9][a-z0-9_.-]+@[a-z0-9]+\.(com|net|org|biz|uk|ca|gov|us|eu)/i;
-    if (emailRegEx.test(str)) {
-        emailInput.className = 'valid';
-    } else {
-        emailInput.className = 'invalid';
-    };
-};
-
-const goBtn = document.querySelector('#submit-btn');
-
-
 const emailInput = document.querySelector('#femail');
-emailInput.addEventListener('blur', checkEmail);
+emailInput.addEventListener('blur', () => {
+    checkValidity(emailInput, emailInput.value, emailRegEx);
+});
+emailInput.addEventListener('keyup', () => {
+    if (emailInput.className === 'invalid') {
+        checkValidity(emailInput, emailInput.value, emailRegEx);
+    };
+});
 
+const countryInput = document.querySelector('#fcountry');
+countryInput.addEventListener('blur', () => {
+    checkValidity(countryInput, countryInput.value, countryRegEx);
+});
+countryInput.addEventListener('keyup', () => {
+    if (countryInput.className === 'invalid') {
+        checkValidity(countryInput, countryInput.value, countryRegEx);
+    };
+});
 
+const zipcodeInput = document.querySelector('#fzip');
+zipcodeInput.addEventListener('blur', () => {
+    checkValidity(zipcodeInput, zipcodeInput.value, zipcodeRegEx);
+});
+zipcodeInput.addEventListener('keyup', () => {
+    if (zipcodeInput.className === 'invalid') {
+        checkValidity(zipcodeInput, zipcodeInput.value, zipcodeRegEx);
+    };
+});
 
-//if any input is focused that has the classname invalid, then check for validation on every keypress of that inputw
-//function that checks for validity
-//function that checks for invalidity
-//function that's activated on focus
-//function that's activated on blur
-//put regexes in array, put input variables in array, add event listener to form element and then do indexOf(e.target);
-//then run it through single function that takes the input and the associated regex as arguments, gives the input an associated class name and checks that everything is validated
-//also checks when input is focused if the input previously has an invalid class. if so, it checks for validity on that input with every keystroke 
+const passwordInput = document.querySelector('#fpass');
+passwordInput.addEventListener('keyup', submitAble);
+
+const submitBtn = document.querySelector('#submit-btn');
+submitBtn.disabled = true;
+submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    checkValidity(passwordInput, passwordInput.value, passwordRegEx);
+});
